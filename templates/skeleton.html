@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset = "UTF-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE = edge">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <title>{% block page_title %}My Website{% endblock %}</title>
+    <link rel = "stylesheet" href = "{% static "app.css" %}" />
+    {% block CSS %}{% endblock %}
+</head>
+<body>
+    <header id = "main-navigation">
+        <h1><a href = "{% url 'Home' %}">Moaaz's Blog</a></h1>
+        <nav>
+          <a href = {% url 'Posts-list' %}>All Posts</a>
+          <a href = {% url 'Posts-to-be-read-later' %}>Posts marked as Read Later</a>
+        </nav>
+    </header>      
+    {% block page_content %}{% endblock %}
+</body>
+</html>

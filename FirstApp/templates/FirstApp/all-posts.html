@@ -1,0 +1,23 @@
+{% extends "skeleton.html" %}
+{% load static %}
+
+{% block page_title %}
+  {{ heading }}
+{% endblock %}
+
+{% block CSS %}
+  <link rel = "stylesheet" href = "{% static "FirstApp/all-posts.css" %}" />
+  <link rel = "stylesheet" href = "{% static "FirstApp/post.css" %}" />
+{% endblock %}
+
+{% block page_content %}
+
+<section id = "all-posts">
+    <h2>{{ heading }}</h2>
+    <ul>
+        {% for post in all_posts %}
+            {% include 'FirstApp/includes/post-preview.html' %}
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

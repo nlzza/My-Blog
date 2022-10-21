@@ -1,0 +1,64 @@
+{% extends "skeleton.html" %}
+{% load static %}
+
+{% block page_title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block CSS %}
+    <link rel = "stylesheet" href = "{% static "FirstApp/post-details.css" %}" /> 
+{% endblock %}
+
+{% block page_content %}
+
+<section id = "summary">
+    <h2>{{ post.title }}</h2>
+    <div>
+        {% for tag in tags %}
+            <span class = "tag">{{ tag }}</span>
+        {% endfor %}
+    </div>
+    <article>
+        <img src = "{{ post.image.url }}" alt = "{{ post.title }}" />
+        <address>By <a href = "mailto: {{ post.author.email_address }}">{{ post.author }}</a></address>
+        <div>Last updated on <time>{{ post.date }}</time></div>
+    </article>
+    <form method = "POST" id = "read-later" action = "{% url 'Home' %}">
+        {% csrf_token %}
+        <input type = "hidden" name = "later" value = {{ post.id }}>
+        <button>Read later</button>
+    </form>
+</section>
+
+<main>
+    {{ post.content|linebreaks }}
+</main>
+
+<section id = "comment-form">
+    <h2>Your comment</h2>
+    <form method = "POST">
+        {% csrf_token %}
+        <div class = "form-control">
+            {{ form.as_p }}
+        </div>
+        <button>Submit</button>
+    </form>
+</section>
+
+<section id = "comments">
+    {% if comments %}
+        <h2>There are {{ count }} comments</h2>
+        <ul>
+        {% for comment in comments %}
+            <li>
+            <h3>{{ comment.username }}</h3>
+            <p>{{ comment.comment|linebreaks }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no comments yet! Be the first one to comment!</p>
+    {% endif %}
+</section>
+
+{% endblock %}
